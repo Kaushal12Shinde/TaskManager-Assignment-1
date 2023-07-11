@@ -12,7 +12,7 @@ function Taskbox() {
             const taskListData = localStorage.getItem('savedTaskList');
             if(taskListData)
                 setTaskList(JSON.parse(taskListData));
-        },[taskList])
+        },[])
 
 
     //--Display Taskform or TaskTable
@@ -55,7 +55,33 @@ function Taskbox() {
                 alert("Please fill all fields");
             }
         }
+        
 
+    //--Check and Uncheck funtion for Done and Todo Respectively..
+        const handelTaskStatus=(index)=>{
+            let tempTaskList = [...taskList];
+            tempTaskList[index].Status = tempTaskList[index].Status==='Todo'?'Done':'Todo';
+            setTaskList(tempTaskList);
+            localStorage.setItem('savedTaskList', JSON.stringify(tempTaskList));
+        }
+        
+    
+    //--Sorting on Basis Of todo Tasks and completed Tasks
+        const displayTasks=(e)=>{
+
+            let tempTaskList = JSON.parse(localStorage.getItem('savedTaskList'));
+
+            if(e.target.innerText==='All')
+                setTaskList(tempTaskList);
+            else{
+                let displayTaskList = tempTaskList.filter((eachTask)=>{
+                    if(eachTask.Status===e.target.innerText)
+                        return eachTask;
+                });
+                setTaskList(displayTaskList);
+            }
+        }
+    
     return (
         <div className="Taskbox">
 
@@ -68,9 +94,9 @@ function Taskbox() {
             <div className="selectionSection">
                 <div className="select">
                     <button onClick={handleTaskForm}>Add</button>
-                    <button>All</button>
-                    <button>Todo</button>
-                    <button>Done</button>
+                    <button onClick={displayTasks}>All</button>
+                    <button onClick={displayTasks}>Todo</button>
+                    <button onClick={displayTasks}>Done</button>
                 </div>
             </div>
             
@@ -78,8 +104,17 @@ function Taskbox() {
                 <div className="task">
                     <ul>
                         {taskList && 
-                            taskList.map((eachTask)=>{
-                               return(<li><span><input type="checkbox" id="checkbox"/><label htmlFor="checkbox"></label></span>{eachTask.Task}<span className='date'>{eachTask.Date}</span></li>);
+                            taskList.map((eachTask,index)=>{
+                                return(
+                                        <li key={index}>
+                                            <span>
+                                                <input type="checkbox" id={index} checked={eachTask.Status==='Done'}
+                                                    onChange={()=>handelTaskStatus(index)}/>
+                                                <label htmlFor={index}></label>
+                                            </span>
+                                            {eachTask.Task}
+                                            <span className='date'>{eachTask.Date}</span>
+                                        </li>);
                             })
                         }
                     </ul>
