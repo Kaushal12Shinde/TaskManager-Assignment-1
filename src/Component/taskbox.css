@@ -3,12 +3,18 @@
     height: 600px;
     display: flex;
     flex-direction: column;
-    /* border: 1px solid black; */
     row-gap: 30px;
     z-index: 1;
 }
 
 .headSection{
+    height: 80px;
+    position: relative;
+}
+.head{
+    position: absolute;
+    top: 70px;
+    width: 526px;
     border-radius: 10px;
     border: 5px solid #FFF;
     background: #E9D8E9;
@@ -18,24 +24,28 @@
     padding: 20px;
 }
 
+
 .selectionSection{
-    /* position: relative; */
+    position: relative;
+    height: 80px;
     
 }
 .select{
-    /* position: absolute; */
+    position: absolute;
     border-radius: 10px;
     border: 5px solid #FFF;
     background: #CDC3E6;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 524.8px;
     height: 80px;
-    /* bottom: -60px;
-    right: -250px;
-    z-index: 2; */
+    bottom: -100px;
+    right: -300px;
+    z-index: 2;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
+
 
 .select button{
     width: 60px;
@@ -48,44 +58,51 @@
 }
 
 .taskSection{
-    /* position: relative; */
+    position: relative;
 }
 .task{
+    width: 525px;
     max-height:330px;
-    /* position: absolute;
-    top:-10px;
+    position: absolute;
+    top:30px;
     left: -300px;
-    z-index: 3; */
+    z-index: 3;
     border-radius: 10px;
     border: 5px solid #FFF;
     background: #ABA8E2;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(2px);
-    overflow: auto;
+    
 }
-.task::-webkit-scrollbar {
-    width: 3px;
-  }
 
-  .task::-webkit-scrollbar-track {
-    background: #ABA8E2;
-  }
-
-  .task::-webkit-scrollbar-thumb {
-    background-color: #ffffff;
-    border-radius: 10px;
-    border: 1px solid #ffffff;
-  }
 ul{
+    max-height:270px;
     padding: 10px;
     list-style:none;
     display: flex;
     flex-direction: column;
+    overflow: auto;
+}
+
+ul::-webkit-scrollbar {
+    width: 3px;
+  }
+
+ul::-webkit-scrollbar-track {
+    background: #ABA8E2;
+}
+
+ul::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
 }
 
 li{
-    padding: 10px 10px;
+    padding: 12px 12px;
     border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
 }
 li:hover{
     background-color: white;
@@ -93,6 +110,21 @@ li:hover{
 li{
     position: relative;
 }
+
+
+li input[type="checkbox"] {
+    width: 15px; 
+    height: 15px; 
+    border: 1px solid gray;
+    background-color: #ffffff;
+    margin-right: 10px;
+}
+
+li input[type="checkbox"]:checked {
+    background-color: #6ea8fe; 
+    
+}
+
 .date{
     position: absolute;
     right: 0;
@@ -115,6 +147,9 @@ li{
     backdrop-filter: blur(2px);
 }
 
+.NoTask{
+
+}
       
 form {
         display: flex;
@@ -130,6 +165,8 @@ form input {
     border-bottom: 1px solid lightgray;
     padding: 20px 10px;
     outline: none;
+    font-size: 16px;
+    font-weight: 500;
 }
 form input::placeholder{
     color: black;
@@ -152,6 +189,7 @@ form button {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    padding-bottom: 5px;
 }
 .deleteBut{
     background-color:#ABA8E2;
@@ -164,4 +202,58 @@ form button {
     font-weight: bold;
     outline: none;
     border-radius: 5px;
+}
+
+/* media Queries */
+
+@media (max-width:1024px){
+    .head{
+        top:40px;
+    }
+    .select{
+        bottom: -40px;
+        right: -150px;
+    }
+    .task{
+        top: 40px;
+        left: -150px;
+    }
+}
+@media (max-width:768px){
+    .head{
+        top:40px;
+    }
+    .select{
+        bottom: -40px;
+        right: -60px;
+    }
+    .task{
+        left: -50px;
+    }
+}
+@media (max-width:650px) {
+    .head{
+        top:0px;
+        position: relative;
+        width: auto;
+    }
+    .select{
+        bottom: 0px;
+        right: 0px;
+        position: relative;
+        width: auto;
+    }
+    .task{
+        top: 0px;
+        left: 0px;
+        position: relative;
+        width: auto;
+    }
+}
+
+@media (max-width:400px) {
+    form input{
+        width: 250px;
+    }
+    
 }

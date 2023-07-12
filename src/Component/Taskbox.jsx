@@ -7,6 +7,7 @@ function Taskbox() {
     const [dateInForm, setDateInForm] = useState('');
     const [taskList, setTaskList] = useState([]);
     const [taskDeletion ,setTaskDeletion] = useState(false);
+    const [allTask, setAllTask] = useState(true)
 
 
     //--As taskList updates or Refresh Page it will rerender Array
@@ -74,13 +75,23 @@ function Taskbox() {
             let tempTaskList = JSON.parse(localStorage.getItem('savedTaskList'));
 
             if(e.target.innerText==='All')
+            {
+                setAllTask(true);
                 setTaskList(tempTaskList);
+            }
             else{
+                setAllTask(false);
                 let displayTaskList = tempTaskList.filter((eachTask)=>{
                     if(eachTask.Status===e.target.innerText)
                         return eachTask;
                 });
-                setTaskList(displayTaskList);
+                if(displayTaskList.length===0)
+                {
+                    alert(`No ${e.target.innerText} Task Yet`);
+                    setTaskList(JSON.parse(localStorage.getItem('savedTaskList')));
+                }
+                else
+                    setTaskList(displayTaskList);
             }
         }
 
@@ -117,16 +128,16 @@ function Taskbox() {
             </div>
 
             <div className="selectionSection">
-                <div className="select">
+                {!taskForm && <div className="select">
                     <button onClick={handleTaskForm}>Add</button>
                     <button onClick={displayTasks}>All</button>
                     <button onClick={displayTasks}>Todo</button>
                     <button onClick={displayTasks}>Done</button>
-                </div>
+                </div>}
             </div>
             
             {!taskForm && <div className="taskSection">
-                {taskList.length!==0 && <div className="task">
+                {taskList && <div className="task">
                     <ul>
                         {taskList && 
                             taskList.map((eachTask,index)=>{
@@ -143,11 +154,12 @@ function Taskbox() {
                             })
                         }
                     </ul>
-                </div>}
-                {taskList.length!==0 && <div className="removalContainer">
+                    {allTask&&<div className="removalContainer">
                         <button onClick={()=>{setTaskDeletion(!taskDeletion)}} className={taskDeletion ? 'deleteBut' : 'deleteButton'}>Delete</button>
                         <button onClick={handleClearList}>Clear</button>
+                    </div>}
                 </div>}
+                {taskList.length===0 && <div className='task' style={{padding:'20px'}}> Click on Add to view task here</div> }
             </div>}
             
             {taskForm && <div className="taskForm">
