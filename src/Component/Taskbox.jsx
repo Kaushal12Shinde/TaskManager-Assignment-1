@@ -137,7 +137,7 @@ function Taskbox() {
             </div>
             
             {!taskForm && <div className="taskSection">
-                {taskList && <div className="task">
+                {taskList.length!==0 && <div className="task">
                     <ul>
                         {taskList && 
                             taskList.map((eachTask,index)=>{
