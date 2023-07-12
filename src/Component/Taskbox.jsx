@@ -6,6 +6,8 @@ function Taskbox() {
     const [textInForm, setTextInForm] = useState('');
     const [dateInForm, setDateInForm] = useState('');
     const [taskList, setTaskList] = useState([]);
+    const [taskDeletion ,setTaskDeletion] = useState(false);
+
 
     //--As taskList updates or Refresh Page it will rerender Array
         useEffect(()=>{
@@ -36,7 +38,7 @@ function Taskbox() {
     //--On Submit check edge Case and store Data in array
         const handelAddTask = (e) =>{
             e.preventDefault();
-            if(textInForm.length!=0&&dateInForm.length!=0){
+            if(textInForm.length!==0 && dateInForm.length!==0){
                 const newTask = {
                     Task : textInForm,
                     Date: dateInForm,
@@ -57,7 +59,7 @@ function Taskbox() {
         }
         
 
-    //--Check and Uncheck funtion for Done and Todo Respectively..
+    //--Check and Uncheck funtions for Done and Todo Task Respectively..
         const handelTaskStatus=(index)=>{
             let tempTaskList = [...taskList];
             tempTaskList[index].Status = tempTaskList[index].Status==='Todo'?'Done':'Todo';
@@ -81,6 +83,29 @@ function Taskbox() {
                 setTaskList(displayTaskList);
             }
         }
+
+
+    //--Clearing the Task from List
+        const handleClearList=()=>{
+            setTaskList([])
+            localStorage.removeItem('savedTaskList');
+        }
+
+
+    //--Deleting Particular Task
+        const handelDeletion=(index)=>{
+            if(taskDeletion===true)
+            {
+                console.log(taskDeletion)
+                let tempTaskList = JSON.parse(localStorage.getItem('savedTaskList'));
+                tempTaskList.splice(index,1);
+                if(tempTaskList.length===0)
+                    setTaskDeletion(false);
+                setTaskList(tempTaskList);
+                localStorage.setItem('savedTaskList',JSON.stringify(tempTaskList));
+            }
+        }
+
     
     return (
         <div className="Taskbox">
@@ -101,12 +126,12 @@ function Taskbox() {
             </div>
             
             {!taskForm && <div className="taskSection">
-                <div className="task">
+                {taskList.length!==0 && <div className="task">
                     <ul>
                         {taskList && 
                             taskList.map((eachTask,index)=>{
                                 return(
-                                        <li key={index}>
+                                        <li key={index} onClick={()=>handelDeletion(index)}>
                                             <span>
                                                 <input type="checkbox" id={index} checked={eachTask.Status==='Done'}
                                                     onChange={()=>handelTaskStatus(index)}/>
@@ -118,7 +143,11 @@ function Taskbox() {
                             })
                         }
                     </ul>
-                </div>
+                </div>}
+                {taskList.length!==0 && <div className="removalContainer">
+                        <button onClick={()=>{setTaskDeletion(!taskDeletion)}} className={taskDeletion ? 'deleteBut' : 'deleteButton'}>Delete</button>
+                        <button onClick={handleClearList}>Clear</button>
+                </div>}
             </div>}
             
             {taskForm && <div className="taskForm">

@@ -1,8 +1,9 @@
 .Taskbox{
     width: 528px;
-    height: 550px;
+    height: 600px;
     display: flex;
     flex-direction: column;
+    /* border: 1px solid black; */
     row-gap: 30px;
     z-index: 1;
 }
@@ -57,7 +58,6 @@
     z-index: 3; */
     border-radius: 10px;
     border: 5px solid #FFF;
-    
     background: #ABA8E2;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(2px);
@@ -143,6 +143,25 @@ form button {
     font-weight: bold;
     cursor: pointer;
     border: 1px solid grey;
+    outline: none;
+    border-radius: 5px;
+}
+.removalContainer{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.deleteBut{
+    background-color:#ABA8E2;
+}
+
+.removalContainer button{
+    width: 60px;
+    height: 30px;
+    border: 1px solid grey;
+    font-weight: bold;
     outline: none;
     border-radius: 5px;
 }
